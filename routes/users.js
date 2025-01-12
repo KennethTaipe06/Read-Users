@@ -29,10 +29,18 @@ const User = require('../models/User');
  *                     type: string
  *                   phone:
  *                     type: string
+ *                   image:
+ *                     type: object
+ *                     properties:
+ *                       data:
+ *                         type: string
+ *                         format: base64
+ *                       contentType:
+ *                         type: string
  */
 router.get('/', async (req, res) => {
   try {
-    const users = await User.find({}, 'username email firstName lastName address phone');
+    const users = await User.find({}, 'username email firstName lastName address phone image');
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -77,6 +85,14 @@ router.get('/', async (req, res) => {
  *                   type: string
  *                 phone:
  *                   type: string
+ *                 image:
+ *                   type: object
+ *                   properties:
+ *                     data:
+ *                       type: string
+ *                       format: base64
+ *                     contentType:
+ *                       type: string
  *       404:
  *         description: Usuario no encontrado
  *       401:
@@ -100,7 +116,7 @@ router.get('/:id', async (req, res) => {
     }
 
     try {
-      const user = await User.findById(userId, 'username email firstName lastName address phone');
+      const user = await User.findById(userId, 'username email firstName lastName address phone image');
       if (user == null) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
