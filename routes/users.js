@@ -116,7 +116,8 @@ router.get('/:id', async (req, res) => {
     }
 
     try {
-      const user = await User.findById(userId, 'username email firstName lastName address phone image');
+      //const user = await User.findById(userId, 'username email firstName lastName address phone  semester parallel career description image'); // con imagen cambiar tambien en models
+      const user = await User.findById(userId, 'username email firstName lastName address phone semester parallel career description');
       if (user == null) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
