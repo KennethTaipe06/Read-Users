@@ -127,4 +127,59 @@ router.get('/:id', async (req, res) => {
   });
 });
 
+/**
+ * @swagger
+ * /users/public/{id}:
+ *   get:
+ *     summary: Obtiene un usuario por ID sin autenticación
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Usuario encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 username:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 firstName:
+ *                   type: string
+ *                 lastName:
+ *                   type: string
+ *                 address:
+ *                   type: string
+ *                 phone:
+ *                   type: string
+ *                 image:
+ *                   type: object
+ *                   properties:
+ *                     data:
+ *                       type: string
+ *                       format: base64
+ *                     contentType:
+ *                       type: string
+ *       404:
+ *         description: Usuario no encontrado
+ */
+router.get('/public/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id, 'username email firstName lastName address phone image');
+    if (user == null) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;
