@@ -13,12 +13,6 @@ const userSchema = new mongoose.Schema({
   parallel: String,
   career: String,
   description: String,
-  // image: {
-  //   data: Buffer,
-  //   contentType: String
-  // }
-
-
 });
 
 module.exports = mongoose.model('User', userSchema);
