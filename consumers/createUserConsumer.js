@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const kafka = new Kafka({
   clientId: 'my-app',
-  brokers: ['localhost:9092']
+  brokers: [process.env.KAFKA_BROKER]
 });
 
 const consumer = kafka.consumer({ groupId: 'create-user-group' });
