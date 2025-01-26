@@ -18,7 +18,8 @@ consumer.on('message', async (message) => {
     const decryptedMessage = decryptMessage(parsedMessage);
     console.log('Received and decrypted message:', decryptedMessage);
 
-    const user = new User(JSON.parse(decryptedMessage));
+    const userData = JSON.parse(decryptedMessage);
+    const user = new User(userData);
     await user.save();
     console.log('User saved to MongoDB');
   } catch (err) {

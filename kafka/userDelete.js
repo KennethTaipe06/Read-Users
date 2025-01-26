@@ -18,9 +18,9 @@ consumer.on('message', async (message) => {
     const decryptedMessage = decryptMessage(parsedMessage);
     console.log('Received and decrypted message:', decryptedMessage);
 
-    const user = new User(JSON.parse(decryptedMessage));
-    await user.save();
-    console.log('User saved to MongoDB');
+    const { id } = JSON.parse(decryptedMessage);
+    await User.findByIdAndDelete(id);
+    console.log(`User with ID ${id} deleted from MongoDB`);
   } catch (err) {
     console.error('Error processing message:', err);
   }
