@@ -4,51 +4,6 @@ const User = require('../models/User');
 
 /**
  * @swagger
- * /users:
- *   get:
- *     summary: Obtiene todos los usuarios
- *     responses:
- *       200:
- *         description: Lista de usuarios
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   username:
- *                     type: string
- *                   email:
- *                     type: string
- *                   firstName:
- *                     type: string
- *                   lastName:
- *                     type: string
- *                   address:
- *                     type: string
- *                   phone:
- *                     type: string
- *                   image:
- *                     type: object
- *                     properties:
- *                       data:
- *                         type: string
- *                         format: base64
- *                       contentType:
- *                         type: string
- */
-router.get('/', async (req, res) => {
-  try {
-    const users = await User.find({}, 'username email firstName lastName address phone image');
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-/**
- * @swagger
  * /users/{id}:
  *   get:
  *     summary: Obtiene un usuario por ID
@@ -116,7 +71,6 @@ router.get('/:id', async (req, res) => {
     }
 
     try {
-      //const user = await User.findById(userId, 'username email firstName lastName address phone  semester parallel career description image'); // con imagen cambiar tambien en models
       const user = await User.findById(userId, 'username email firstName lastName address phone semester parallel career description');
       if (user == null) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -126,61 +80,6 @@ router.get('/:id', async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
-});
-
-/**
- * @swagger
- * /users/public/{id}:
- *   get:
- *     summary: Obtiene un usuario por ID sin autenticación
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del usuario
- *     responses:
- *       200:
- *         description: Usuario encontrado
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 username:
- *                   type: string
- *                 email:
- *                   type: string
- *                 firstName:
- *                   type: string
- *                 lastName:
- *                   type: string
- *                 address:
- *                   type: string
- *                 phone:
- *                   type: string
- *                 image:
- *                   type: object
- *                   properties:
- *                     data:
- *                       type: string
- *                       format: base64
- *                     contentType:
- *                       type: string
- *       404:
- *         description: Usuario no encontrado
- */
-router.get('/public/:id', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id, 'username email firstName lastName address phone image');
-    if (user == null) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
-    res.json(user);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
 });
 
 module.exports = router;

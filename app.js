@@ -6,8 +6,9 @@ const redis = require('redis');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/users');
-const userCreated = require('./kafka/userCreated');
-const userDelete = require('./kafka/userDelete');
+const userCreated = require('./consumers/userCreated');
+const userDelete = require('./consumers/userDelete');
+const userEdit= require('./consumers/userEdit');
 
 dotenv.config();
 

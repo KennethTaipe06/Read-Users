@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const User = require('../models/User');
+// const User = require('../models/User'); // Esta línea no es necesaria
 
 const decryptMessage = (encryptedMessage) => {
   const { iv, encryptedData } = encryptedMessage;
