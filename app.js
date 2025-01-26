@@ -6,9 +6,8 @@ const redis = require('redis');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/users');
-const createUserConsumer = require('./consumers/createUserConsumer');
-const loginConsumer = require('./consumers/loginConsumer');
-const deleteUserConsumer = require('./consumers/deleteUserConsumer');
+const userCreated = require('./kafka/userCreated');
+const userDelete = require('./kafka/userDelete');
 
 dotenv.config();
 
@@ -58,7 +57,4 @@ app.use('/users', userRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-  createUserConsumer.run().catch(console.error);
-  loginConsumer.run().catch(console.error);
-  deleteUserConsumer.run().catch(console.error);
 });
